@@ -1,0 +1,85 @@
+class Flight:
+    def __init__(self, flight_id, source, destination, price):
+        self.flight_id = flight_id
+        self.source = source
+        self.destination = destination
+        self.price = price
+
+class FlightTable:
+    def __init__(self):
+        self.flights = []
+    
+    def add_flight(self, flight):
+        self.flights.append(flight)
+    
+    def search_by_flight_id(self, flight_id):
+        for flight in self.flights:
+            if flight.flight_id == flight_id:
+                return flight
+        return None
+    
+    def search_by_source(self, source):
+        matching_flights = []
+        for flight in self.flights:
+            if flight.source == source:
+                matching_flights.append(flight)
+        return matching_flights
+    
+    def search_by_destination(self, destination):
+        matching_flights = []
+        for flight in self.flights:
+            if flight.destination == destination:
+                matching_flights.append(flight)
+        return matching_flights
+
+def main():
+    flight_table = FlightTable()
+
+    flight_table.add_flight(Flight("AI161E90", "BLR", "BOM", 5600))
+    flight_table.add_flight(Flight("BR161F91", "BOM", "BBI", 6750))
+    flight_table.add_flight(Flight("AI161F99", "BBI", "BLR", 8210))
+    flight_table.add_flight(Flight("VS171E20", "JLR", "BBI", 5500))
+    flight_table.add_flight(Flight("AS171G30", "HYD", "JLR", 4400))
+    flight_table.add_flight(Flight("AI131F49", "HYD", "BOM", 3499))
+
+    while True:
+        print("Welcome to the Flight Search!")
+        print("1. Search by Flight ID")
+        print("2. Search by Source")
+        print("3. Search by Destination")
+        print("4. Exit")
+        choice = int(input("Please choose an option: "))
+        
+        if choice == 1:
+            flight_id = input("Enter the Flight ID: ")
+            flight = flight_table.search_by_flight_id(flight_id)
+            if flight:
+                print(f"Flight ID: {flight.flight_id}, From: {flight.source}, To: {flight.destination}, Price: {flight.price}")
+            else:
+                print("Sorry, no flight found with that ID.")
+        elif choice == 2:
+            source = input("Enter the Source city: ")
+            matching_flights = flight_table.search_by_source(source)
+            if matching_flights:
+                print("Matching flights:")
+                for flight in matching_flights:
+                    print(f"Flight ID: {flight.flight_id}, To: {flight.destination}, Price: {flight.price}")
+            else:
+                print("No flights found from that source.")
+        elif choice == 3:
+            destination = input("Enter the Destination city: ")
+            matching_flights = flight_table.search_by_destination(destination)
+            if matching_flights:
+                print("Matching flights:")
+                for flight in matching_flights:
+                    print(f"Flight ID: {flight.flight_id}, From: {flight.source}, Price: {flight.price}")
+            else:
+                print("No flights found to that destination.")
+        elif choice == 4:
+            print("Thank you for using Flight Search. Have a great day!")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+if __name__ == "__main__":
+    main()
